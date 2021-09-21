@@ -1,5 +1,8 @@
 from django.db import models
+from django.conf import settings
 from django.contrib.auth.models import User
+
+
 from . import ShopType
 
 # Create your models here.
@@ -11,7 +14,7 @@ class Shop(models.Model):
     url = models.URLField(max_length=200, blank=False)
     address = models.CharField(max_length=254, blank=True)
     type = models.CharField(max_length=50, choices=ShopType.CHOICES, default=ShopType.WOOCOMMERCE)
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 
 class ShopImage(models.Model):
