@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'affi.product',
     'affi.category',
     'affi.shop',
-
+    'affi.user',
     # installed
     'graphene_django',
     'django_filters',
@@ -140,12 +140,12 @@ MEDIA_ROOT = os.path.join(BASE_DIR, "mediafiles")
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 
-
 GRAPHENE = {
     "RELAY_CONNECTION_ENFORCE_FIRST_OR_LAST": False,
     "RELAY_CONNECTION_MAX_LIMIT": 100,
     "MIDDLEWARE": [
-    #     "saleor.graphql.middleware.app_middleware",
-    #     "saleor.graphql.middleware.JWTMiddleware",
+        #     "saleor.graphql.middleware.app_middleware",
+        #     "saleor.graphql.middleware.JWTMiddleware",
     ],
 }
+AUTH_USER_MODEl = 'affi.user.User'
