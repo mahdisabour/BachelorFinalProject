@@ -148,4 +148,4 @@ GRAPHENE = {
         #     "saleor.graphql.middleware.JWTMiddleware",
     ],
 }
-AUTH_USER_MODEl = 'affi.user.User'
+AUTH_USER_MODEL = 'user.User'
