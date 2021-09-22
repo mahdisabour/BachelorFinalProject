@@ -1,12 +1,13 @@
+
 from graphene_django import DjangoObjectType
 from graphene import relay
 
-from ...shop.models import Shop, ShopImage
+from ...category.models import Category, Image
 
 
 class PlainTextNode(relay.Node):
     class Meta:
-        name = 'shopNetwork'
+        name = 'categoryNetwork'
 
     @staticmethod
     def to_global_id(type, id):
@@ -17,17 +18,19 @@ class PlainTextNode(relay.Node):
         return global_id.split(':')
 
 
-class ShopNode(DjangoObjectType):
+class CategoryNode(DjangoObjectType):
     class Meta:
-        model = Shop
+        model = Category
         interfaces = (PlainTextNode, )
-        filter_fields = ['id', ]
+        filter_fields = ["id", ]
         filter_order_by = True
 
 
-class ShopImageNode(DjangoObjectType):
+class ImageNode(DjangoObjectType):
     class Meta:
-        model = ShopImage
+        model = Image
         interfaces = (PlainTextNode, )
-        filter_fields = ['id', ]
+        filter_fields = ["id", ]
         filter_order_by = True
+
+        

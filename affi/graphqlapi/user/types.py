@@ -1,7 +1,7 @@
 from graphene_django import DjangoObjectType
 from graphene import relay
 
-from affi.user.models import User, Role
+from affi.user.models import User
 
 
 class UserInterface(relay.Node):
@@ -24,10 +24,3 @@ class UserNode(DjangoObjectType):
         filter_fields = ['id', ]
         filter_order_by = True
 
-
-class RoleNode(DjangoObjectType):
-    class Meta:
-        model = Role
-        interfaces = (UserInterface, )
-        filter_fields = ['id', ]
-        filter_order_by = True
