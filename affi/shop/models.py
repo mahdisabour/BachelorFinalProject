@@ -1,23 +1,27 @@
 from django.db import models
-from django.db.models.fields import proxy
+from django.conf import settings
 
-from ..user.models import User
+from ..core.models import User
 from . import ShopType
 from .managers import ShopManager
 
 # Create your models here.
 
-class Shop(User):
-    base_type = User.Roles.SHOP
+class Shop(models.Model):
 
     objects = ShopManager()
 
-    created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True)
     name = models.CharField(max_length=50, blank=False)
     url = models.URLField(max_length=200, blank=False)
     type = models.CharField(max_length=50, choices=ShopType.CHOICES, default=ShopType.WOOCOMMERCE)
-    # user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            self.user.role = User.Roles.SHOP
+            self.user.save()
+        return super().save(*args, **kwargs)
 
 
 class ShopImage(models.Model):

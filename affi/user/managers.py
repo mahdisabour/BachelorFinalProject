@@ -1,7 +1,9 @@
-from django.contrib.auth.models import BaseUserManager
+from django.contrib.auth.models import (
+    BaseUserManager
+)
 
 
-class ShopManager(BaseUserManager):
+class AffManager(BaseUserManager):
     def get_queryset(self, *args, **kwargs):
         results = super().get_queryset(*args, **kwargs)
         return results

@@ -1,12 +1,12 @@
 from graphene_django import DjangoObjectType
 from graphene import relay
 
-from affi.user.models import User
+from ...user.models import Aff
 
 
-class UserInterface(relay.Node):
+class PlainTextNode(relay.Node):
     class Meta:
-        name = 'user'
+        name = 'userNode'
 
     @staticmethod
     def to_global_id(type, id):
@@ -17,10 +17,9 @@ class UserInterface(relay.Node):
         return global_id.split(':')
 
 
-class UserNode(DjangoObjectType):
+class AffNode(DjangoObjectType):
     class Meta:
-        model = User
-        interfaces = (UserInterface, )
+        model = Aff
+        interfaces = (PlainTextNode, )
         filter_fields = ['id', ]
         filter_order_by = True
-
