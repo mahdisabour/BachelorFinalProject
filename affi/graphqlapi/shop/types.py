@@ -1,5 +1,6 @@
 from graphene_django import DjangoObjectType
 from graphene import relay
+from graphql_jwt.decorators import login_required
 
 from ...shop.models import Shop, ShopImage
 
@@ -24,6 +25,11 @@ class ShopNode(DjangoObjectType):
         filter_fields = ['id', ]
         filter_order_by = True
 
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
+
 
 class ShopImageNode(DjangoObjectType):
     class Meta:
@@ -31,3 +37,8 @@ class ShopImageNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ['id', ]
         filter_order_by = True
+
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)

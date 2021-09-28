@@ -1,6 +1,7 @@
 
 from graphene_django import DjangoObjectType
 from graphene import relay
+from graphql_jwt.decorators import login_required
 
 from ...category.models import Category, Image
 
@@ -25,6 +26,11 @@ class CategoryNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
+
 
 class ImageNode(DjangoObjectType):
     class Meta:
@@ -32,5 +38,10 @@ class ImageNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ["id", ]
         filter_order_by = True
+
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
 
         

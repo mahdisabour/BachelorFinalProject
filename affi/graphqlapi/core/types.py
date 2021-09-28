@@ -25,10 +25,8 @@ class UserNode(DjangoObjectType):
         filter_fields = ['id', ]
         filter_order_by = True
 
-
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
-        print(info.context.user.is_authenticated)
-        return queryset
+        super().get_queryset(queryset, info)
 

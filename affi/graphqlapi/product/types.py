@@ -1,6 +1,9 @@
 
 from graphene_django import DjangoObjectType
 from graphene import relay
+from graphql_jwt.decorators import login_required
+
+
 
 from ...product.models import (
     Image, 
@@ -32,6 +35,11 @@ class ImageNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
+
 
 class DimensionNode(DjangoObjectType):
     class Meta:
@@ -39,6 +47,11 @@ class DimensionNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ["id", ]
         filter_order_by = True
+
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
 
 
 class DownloadNode(DjangoObjectType):
@@ -48,6 +61,11 @@ class DownloadNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
+
 
 class TagNode(DjangoObjectType):
     class Meta:
@@ -55,6 +73,11 @@ class TagNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ["id", ]
         filter_order_by = True
+
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
 
 
 class ReviewNode(DjangoObjectType):
@@ -64,6 +87,11 @@ class ReviewNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
+
 
 class ProductNode(DjangoObjectType):
     class Meta:
@@ -71,5 +99,10 @@ class ProductNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ["id", ]
         filter_order_by = True
+
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
 
 
