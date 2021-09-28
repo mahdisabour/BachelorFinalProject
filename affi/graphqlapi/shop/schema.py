@@ -5,9 +5,9 @@ from .types import PlainTextNode, ShopImageNode, ShopNode
 
 
 class ShopQuery(graphene.ObjectType):
-    shop = PlainTextNode.Field(ShopNode)
+    # shop = PlainTextNode.Field(ShopNode)
     all_shop = DjangoFilterConnectionField(ShopNode)
 
-    shop_image = PlainTextNode.Field(ShopImageNode)
+    # shop_image = PlainTextNode.Field(ShopImageNode)
     all_shop_image = DjangoFilterConnectionField(ShopImageNode)
     

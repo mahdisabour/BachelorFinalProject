@@ -2,6 +2,7 @@ aniso8601==8.1.1
 asgiref==3.4.1
 autopep8==1.5.7
 Django==3.2.7
+django-cors-headers==3.7.0
 django-filter==2.4.0
 django-graphql-jwt==0.3.4
 django-js-asset==1.2.2

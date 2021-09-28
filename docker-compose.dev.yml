@@ -2,6 +2,7 @@ version: '3.7'
 
 services:
     affi:
+        restart: always
         build:
             context: ./
             dockerfile: Dockerfile.dev
@@ -15,7 +16,7 @@ services:
             - static_volume:/home/app/web/staticfiles
             - media_files:/home/app/web/mediafiles
             - .:/home/app/web/
-            - /data/db.sqlite3:/home/app/web/db.sqlite3/
+            - ./db.sqlite3:/home/app/web/db.sqlite3/
             
 
 volumes:

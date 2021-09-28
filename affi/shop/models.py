@@ -1,5 +1,7 @@
 from django.db import models
 from django.conf import settings
+from django.core.validators import MinValueValidator, MaxValueValidator
+
 
 from ..core.models import User
 from . import ShopType
@@ -14,6 +16,8 @@ class Shop(models.Model):
     name = models.CharField(max_length=50, blank=False)
     url = models.URLField(max_length=200, blank=False)
     type = models.CharField(max_length=50, choices=ShopType.CHOICES, default=ShopType.WOOCOMMERCE)
+    rating = models.FloatField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
 

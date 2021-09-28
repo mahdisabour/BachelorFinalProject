@@ -11,10 +11,13 @@ class UserInterface(relay.Node):
 
     @staticmethod
     def to_global_id(type, id):
+        print("to global id")
         return id
 
     @staticmethod
     def from_global_id(global_id):
+        print("from global id")
+        print(global_id)
         return global_id.split(':')
 
 
@@ -22,7 +25,10 @@ class UserNode(DjangoObjectType):
     class Meta:
         model = User
         interfaces = (UserInterface, )
-        filter_fields = ['id', ]
+        filter_fields = {
+            'id': ['exact'],
+            'phone_number': ['exact']
+        }
         filter_order_by = True
 
     @classmethod

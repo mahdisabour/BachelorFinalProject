@@ -8,5 +8,5 @@ from .types import (
 
 
 class UserQuery(ObjectType):
-    Aff = PlainTextNode.Field(AffNode)
+    # Aff = PlainTextNode.Field(AffNode)
     all_aff = DjangoFilterConnectionField(AffNode)

@@ -9,8 +9,8 @@ from .types import (
 
 
 class CategoryQuery(ObjectType):
-    category = PlainTextNode.Field(CategoryNode)
+    # category = PlainTextNode.Field(CategoryNode)
     all_category = DjangoFilterConnectionField(CategoryNode)
 
-    category_image = PlainTextNode.Field(ImageNode)
+    # category_image = PlainTextNode.Field(ImageNode)
     all_category_image = DjangoFilterConnectionField(ImageNode)
