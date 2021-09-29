@@ -2,12 +2,11 @@ from django.db import models
 from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
-
 from ..core.models import User
 from . import ShopType
 from .managers import ShopManager
 
-# Create your models here.
+
 
 class Shop(models.Model):
 

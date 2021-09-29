@@ -9,7 +9,6 @@ class CoreQuery(graphene.ObjectType):
     user = graphene.Field(UserNode, id=graphene.Int())
     all_users = DjangoFilterConnectionField(UserNode)
 
-
     def resolve_user(self, info, id):
         return User.objects.filter(pk=id).first()
 

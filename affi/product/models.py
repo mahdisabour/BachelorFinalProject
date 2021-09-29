@@ -46,11 +46,6 @@ class Tag(models.Model):
     count = models.IntegerField(blank=True)
 
 
-# class Attribute(models.Model):
-#     name = models.CharField(max_length=50)
-#     slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
-
-
 class Review(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
@@ -100,7 +95,6 @@ class Product(ModelWithMetaData):
     button_text = models.CharField(max_length=50, blank=True)
     tax_status = models.CharField(
         max_length=50, choices=TaxStatus.CHOICES, default=TaxStatus.TAXABLE)  # choices
-    # tax_class =
     manage_stock = models.BooleanField(default=False)
     stock_quantity = models.IntegerField(blank=True, null=True)
     stock_status = models.CharField(
@@ -110,21 +104,18 @@ class Product(ModelWithMetaData):
     weight = models.CharField(max_length=50, blank=True)
     shipping_required = models.BooleanField(blank=True)
     shipping_taxable = models.BooleanField(blank=True)
-    # shipping_class =
-    # shipping_class_id =
     reviews_allowed = models.BooleanField(default=True)
     average_rating = models.CharField(max_length=50, default=0)
     rating_count = models.IntegerField(blank=True, null=True)
     related_ids = models.ManyToManyField("self", blank=True)
     cross_sell_ids = models.ManyToManyField("self", blank=True)
-    parent_id = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
+    parent_id = models.ForeignKey(
+        "self", on_delete=models.CASCADE, blank=True, null=True)
     purchase_note = models.CharField(max_length=50, blank=True)
     categories = models.ManyToManyField("category.Category", blank=True)
     tags = models.ManyToManyField("product.Tag", blank=True)
-    # attributes =
-    # default_attributes =
-    # variations =
     menu_order = models.IntegerField(blank=True, null=True)
     affiliate_rate = models.FloatField(
         validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
-
+    related_shop = models.ForeignKey(
+        "shop.Shop", on_delete=models.CASCADE, null=True, related_name="products")
