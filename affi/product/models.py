@@ -91,18 +91,18 @@ class Product(ModelWithMetaData):
     price_html = models.CharField(max_length=50, blank=True)
     on_sale = models.BooleanField(blank=True)
     purchasable = models.BooleanField(blank=True)
-    total_sales = models.IntegerField(blank=True)
+    total_sales = models.IntegerField(blank=True, null=True)
     virtual = models.BooleanField(default=False, blank=True)
     downloadable = models.BooleanField(default=False, blank=True)
-    download_limit = models.IntegerField(default=-1, blank=True)
-    download_expiry = models.IntegerField(default=-1, blank=True)
+    download_limit = models.IntegerField(default=-1, blank=True, null=True)
+    download_expiry = models.IntegerField(default=-1, blank=True, null=True)
     external_url = models.URLField(max_length=200, blank=True)
     button_text = models.CharField(max_length=50, blank=True)
     tax_status = models.CharField(
         max_length=50, choices=TaxStatus.CHOICES, default=TaxStatus.TAXABLE)  # choices
     # tax_class =
     manage_stock = models.BooleanField(default=False)
-    stock_quantity = models.IntegerField(blank=True)
+    stock_quantity = models.IntegerField(blank=True, null=True)
     stock_status = models.CharField(
         max_length=50, choices=StockStatus.CHOICES, default=StockStatus.INSTOCK)  # choices
     backordered = models.BooleanField(blank=True)
@@ -114,14 +114,17 @@ class Product(ModelWithMetaData):
     # shipping_class_id =
     reviews_allowed = models.BooleanField(default=True)
     average_rating = models.CharField(max_length=50, default=0)
-    rating_count = models.IntegerField(blank=True)
+    rating_count = models.IntegerField(blank=True, null=True)
     related_ids = models.ManyToManyField("self", blank=True)
     cross_sell_ids = models.ManyToManyField("self", blank=True)
-    parent_id = models.ForeignKey("self", on_delete=models.CASCADE, blank=True)
+    parent_id = models.ForeignKey("self", on_delete=models.CASCADE, blank=True, null=True)
     purchase_note = models.CharField(max_length=50, blank=True)
     categories = models.ManyToManyField("category.Category", blank=True)
     tags = models.ManyToManyField("product.Tag", blank=True)
     # attributes =
     # default_attributes =
     # variations =
-    menu_order = models.IntegerField(blank=True)
+    menu_order = models.IntegerField(blank=True, null=True)
+    affiliate_rate = models.FloatField(
+        validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
+

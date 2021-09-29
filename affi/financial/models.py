@@ -1,5 +1,6 @@
 from django.db import models
 
+from . import TransactionState, TransactionType
 
 
 class Wallet(models.Model):
@@ -12,5 +13,14 @@ class Wallet(models.Model):
     user = models.OneToOneField("core.User", on_delete=models.CASCADE)
 
 
-# class Transaction(models.Model):
-#     pass
+class Transaction(models.Model):
+    transaction_date = models.DateTimeField(auto_now=True)
+    origin = models.ForeignKey(
+        Wallet, on_delete=models.CASCADE, related_name="transactions")
+    destination = models.ForeignKey(
+        Wallet, on_delete=models.CASCADE)
+    amount = models.IntegerField()
+    transaction_type = models.CharField(
+        max_length=50, choices=TransactionType.CHOICES)
+    transaction_state = models.CharField(
+        max_length=50, choices=TransactionType.CHOICES, default=TransactionState.PENDING)
