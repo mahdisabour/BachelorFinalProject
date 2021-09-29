@@ -31,8 +31,10 @@ DEBUG = True
 ALLOWED_HOSTS = ["*"]
 
 
-# Application definition
+# cors origin
+CORS_ALLOW_ALL_ORIGINS = True
 
+# Application definition
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -170,10 +172,3 @@ AUTHENTICATION_BACKENDS = [
     "django.contrib.auth.backends.ModelBackend",
 ]
 
-
-# cors origin
-CORS_ALLOW_ALL_ORIGINS = True
-
-CORS_ORIGIN_WHITELIST = [
-    'http://localhost:8100'
-]
