@@ -26,10 +26,6 @@ class User(AbstractUser):
     # add additional fields in here
     phone_number = models.CharField(max_length=20, unique=True)
     address = models.CharField(max_length=100, blank=True, null=True)
-    bank_account_name = models.CharField(max_length=100, blank=True, null=True)
-    bank_account_number = models.CharField(
-        max_length=100, blank=True, null=True)
-    bank_name = models.CharField(max_length=100, blank=True, null=True)
     role = models.CharField(max_length=50, choices=Roles.choices, default=Roles.ADMIN)
     is_verified = models.BooleanField(default=False)
     is_active = models.BooleanField(default=True)

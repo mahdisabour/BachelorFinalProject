@@ -22,7 +22,9 @@ class ShopNode(DjangoObjectType):
     class Meta:
         model = Shop
         interfaces = (PlainTextNode, )
-        filter_fields = ['id', ]
+        filter_fields = {
+            'id':['exact'],
+        } 
         filter_order_by = True
 
     @classmethod

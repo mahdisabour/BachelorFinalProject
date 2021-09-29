@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'affi.category',
     'affi.shop',
     'affi.user',
+    'affi.financial',
     # installed
     'graphene_django',
     'django_filters',
@@ -151,11 +152,10 @@ GRAPHENE = {
     "RELAY_CONNECTION_ENFORCE_FIRST_OR_LAST": False,
     "RELAY_CONNECTION_MAX_LIMIT": 100,
     "MIDDLEWARE": [
-        #     "saleor.graphql.middleware.app_middleware",
-        #     "saleor.graphql.middleware.JWTMiddleware",
         "graphql_jwt.middleware.JSONWebTokenMiddleware",
     ],
 }
+
 AUTH_USER_MODEL = 'core.User'
 
 GRAPHQL_JWT = {
@@ -173,3 +173,7 @@ AUTHENTICATION_BACKENDS = [
 
 # cors origin
 CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8100'
+]

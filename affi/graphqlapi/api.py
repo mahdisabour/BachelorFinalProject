@@ -5,6 +5,7 @@ from .shop.schema import ShopQuery
 from .category.schema import CategoryQuery
 from .product.schema import ProductQuery
 from .user.schema import UserQuery
+from .financial.schema import FinancialQuery
 
 from .core.mutations import CoreMutation
 
@@ -15,6 +16,7 @@ class Query(
     CoreQuery,
     CategoryQuery,
     ProductQuery,
+    FinancialQuery,
     graphene.ObjectType,
 ):
     pass

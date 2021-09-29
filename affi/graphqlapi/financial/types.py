@@ -2,12 +2,12 @@ from graphene_django import DjangoObjectType
 from graphene import relay
 from graphql_jwt.decorators import login_required
 
-from ...core.models import User
+from ...financial.models import Wallet
 
 
-class UserInterface(relay.Node):
+class PlainTextNode(relay.Node):
     class Meta:
-        name = 'coreNode'
+        name = 'financialNode'
 
     @staticmethod
     def to_global_id(type, id):
@@ -18,18 +18,13 @@ class UserInterface(relay.Node):
         return global_id.split(':')
 
 
-class UserNode(DjangoObjectType):
+class WalletNode(DjangoObjectType):
     class Meta:
-        model = User
-        interfaces = (UserInterface, )
-        filter_fields = {
-            'id': ['exact'],
-            'phone_number': ['exact']
-        }
-        filter_order_by = True
+        model = Wallet
+        interfaces = (PlainTextNode, )
+        filter_fields = {}
 
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
-
