@@ -27,7 +27,7 @@ class Dimension(models.Model):
     width = models.IntegerField(blank=True)
     heigth = models.IntegerField(blank=True)
     related_product = models.OneToOneField(
-        "product.Product", on_delete=models.CASCADE, related_name="dimension")
+        "product.Product", on_delete=models.CASCADE, related_name="dimensions")
 
 
 class Download(models.Model):

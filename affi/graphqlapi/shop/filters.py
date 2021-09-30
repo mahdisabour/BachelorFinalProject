@@ -7,4 +7,4 @@ class ShopFilter(django_filters.FilterSet):
 
     class Meta:
         model = Shop
-        fields = ['user', ]
+        fields = []

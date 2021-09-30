@@ -1,18 +1,19 @@
 
+import graphene
 from graphene_django import DjangoObjectType
 from graphene import relay
 from graphql_jwt.decorators import login_required
 
 
-
 from ...product.models import (
-    Image, 
-    Dimension, 
-    Download, 
-    Tag, 
-    Review, 
+    Image,
+    Dimension,
+    Download,
+    Tag,
+    Review,
     Product
 )
+from ..category.types import CategoryNode
 
 
 class PlainTextNode(relay.Node):
@@ -100,9 +101,40 @@ class ProductNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
+    # custom fields
+    images = graphene.List(ImageNode)
+    dimensions = graphene.List(DimensionNode)
+    downloads = graphene.List(DownloadNode)
+    tags = graphene.List(TagNode)
+    reviews = graphene.List(ReviewNode)
+    categories = graphene.List(CategoryNode)
+
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
 
+    @staticmethod
+    @login_required
+    def resolve_images(root, info, **kwargs):
+        return root.images.all()
 
+    @staticmethod
+    @login_required
+    def resolve_dimensions(root, info, **kwargs):
+        return root.dimensions.all()
+
+    @staticmethod
+    @login_required
+    def resolve_downloads(root, info, **kwargs):
+        return root.downloads.all()
+
+    @staticmethod
+    @login_required
+    def resolve_tags(root, info, **kwargs):
+        return root.tags.all()
+
+    @staticmethod
+    @login_required
+    def resolve_categories(root, *args, **kwargs):
+        return root.categories.all()

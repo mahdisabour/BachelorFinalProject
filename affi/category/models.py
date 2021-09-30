@@ -6,12 +6,12 @@ from mptt.managers import TreeManager
 
 class Category(MPTTModel):
     name = models.CharField(max_length=250)
-    slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
+    slug = models.SlugField(max_length=255, unique=True, allow_unicode=True, blank=True)
     description = models.TextField(blank=True, null=True)
     parent = models.ForeignKey(
         "self", null=True, blank=True, related_name="children", on_delete=models.CASCADE
     )
-    display = models.CharField(max_length=50)
+    display = models.CharField(max_length=50, blank=True)
 
     objects = models.Manager()
     tree = TreeManager()

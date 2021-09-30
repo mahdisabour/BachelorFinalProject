@@ -1,8 +1,9 @@
+import graphene
 from graphene_django import DjangoObjectType
 from graphene import relay
 from graphql_jwt.decorators import login_required
 
-from ...financial.models import Wallet
+from ...financial.models import Wallet, Transaction
 
 
 class PlainTextNode(relay.Node):
@@ -18,9 +19,9 @@ class PlainTextNode(relay.Node):
         return global_id.split(':')
 
 
-class WalletNode(DjangoObjectType):
+class TransactionNode(DjangoObjectType):
     class Meta:
-        model = Wallet
+        model = Transaction
         interfaces = (PlainTextNode, )
         filter_fields = {}
 
@@ -28,3 +29,24 @@ class WalletNode(DjangoObjectType):
     @login_required
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
+
+
+class WalletNode(DjangoObjectType):
+    class Meta:
+        model = Wallet
+        interfaces = (PlainTextNode, )
+        filter_fields = {}
+
+    # custome Fields
+    # transactions = graphene.List(TransactionNode)
+
+    @classmethod
+    @login_required
+    def get_queryset(cls, queryset, info):
+        super().get_queryset(queryset, info)
+
+
+    # @staticmethod
+    # @login_required
+    # def resolve_
+

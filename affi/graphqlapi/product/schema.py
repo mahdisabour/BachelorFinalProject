@@ -10,24 +10,16 @@ from .types import (
     ReviewNode, 
     ProductNode
 )
+from .filters import ProductFilter
 
 
 
 class ProductQuery(ObjectType):
-    # product_image = PlainTextNode.Field(ImageNode)
     all_product_image = DjangoFilterConnectionField(ImageNode)
-
-    # dimension = PlainTextNode.Field(DimensionNode)
     all_dimension = DjangoFilterConnectionField(DimensionNode)
-
-    # download = PlainTextNode.Field(DownloadNode)
     all_download = DjangoFilterConnectionField(DownloadNode)
-
-    # tag = PlainTextNode.Field(TagNode)
     all_tag = DjangoFilterConnectionField(TagNode)
-
-    # review = PlainTextNode.Field(ReviewNode)
     all_review = DjangoFilterConnectionField(ReviewNode)
+    all_product = DjangoFilterConnectionField(ProductNode, filterset_class=ProductFilter)
 
-    # product = PlainTextNode.Field(ProductNode)
-    all_product = DjangoFilterConnectionField(ProductNode)
+    
