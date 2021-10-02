@@ -1,5 +1,8 @@
+from graphene import InputObjectType
+import graphene
 from graphene_django import DjangoObjectType
-from graphene import relay
+from graphene import relay, InputObjectType
+from graphene_file_upload.scalars import Upload
 from graphql_jwt.decorators import login_required
 
 from ...user.models import Aff
@@ -29,3 +32,11 @@ class AffNode(DjangoObjectType):
     @login_required
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
+
+
+class AffUpdateInputType(InputObjectType):
+    age = graphene.Int()
+    birth_data = graphene.DateTime()
+    national_code = graphene.String()
+    profile_pic = Upload()
+    full_name = graphene.String()

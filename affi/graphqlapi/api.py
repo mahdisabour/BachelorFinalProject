@@ -8,6 +8,8 @@ from .user.schema import UserQuery
 from .financial.schema import FinancialQuery
 
 from .core.mutations import CoreMutation
+from .user.mutations import UserMutation
+from .shop.mutations import ShopMutation
 
 
 class Query(
@@ -24,6 +26,8 @@ class Query(
 
 class Mutation(
     CoreMutation,
+    UserMutation,
+    ShopMutation,
     graphene.ObjectType
 ):
     pass

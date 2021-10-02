@@ -2,7 +2,7 @@ import graphene
 from graphene_django.filter import DjangoFilterConnectionField
 
 from ...shop.models import Shop
-from .types import PlainTextNode, ShopImageNode, ShopNode
+from .types import PlainTextNode, ShopNode
 from .filters import ShopFilter
 
 class ShopQuery(graphene.ObjectType):

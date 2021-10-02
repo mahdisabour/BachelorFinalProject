@@ -1,5 +1,6 @@
+import graphene
 from graphene_django import DjangoObjectType
-from graphene import relay
+from graphene import relay, InputObjectType
 from graphql_jwt.decorators import login_required
 
 from ...core.models import User
@@ -32,4 +33,14 @@ class UserNode(DjangoObjectType):
     @login_required
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
+
+
+class CreateUserInputType(InputObjectType):
+    phone_number = graphene.String(required=True)
+    password = graphene.String(required=True)
+    email_address = graphene.String(required=True)
+
+
+class UserUpdateInputType(InputObjectType):
+    address = graphene.String()
 

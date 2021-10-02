@@ -1,9 +1,12 @@
+from django.db.models import Avg
+
 import graphene
 from graphene_django import DjangoObjectType
 from graphene import relay
+from graphene_file_upload.scalars import Upload
 from graphql_jwt.decorators import login_required
 
-from ...shop.models import Shop, ShopImage
+from ...shop.models import Shop, ShopRate
 
 
 class PlainTextNode(relay.Node):
@@ -20,20 +23,6 @@ class PlainTextNode(relay.Node):
         return global_id.split(':')
 
 
-class ShopImageNode(DjangoObjectType):
-    class Meta:
-        model = ShopImage
-        interfaces = (PlainTextNode, )
-        filter_fields = ['id', ]
-        filter_order_by = True
-        exclude_fields = ["related_shop", ]
-
-    @classmethod
-    @login_required
-    def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
-
-
 class ShopNode(DjangoObjectType):
     class Meta:
         model = Shop
@@ -42,11 +31,11 @@ class ShopNode(DjangoObjectType):
             'id':['exact'],
         } 
         filter_order_by = True
-        exclude_fields = ["images", ]
+        exclude_fields = []
 
     # custome Field
-    shop_image = graphene.List(ShopImageNode)
     products_count = graphene.Int()
+    shop_rate = graphene.Float()
 
     @classmethod
     @login_required
@@ -56,11 +45,18 @@ class ShopNode(DjangoObjectType):
     
     @staticmethod
     @login_required
-    def resolve_shop_image(root, info, **kwargs):
-        return root.images.all()
+    def resolve_products_count(root, info, **kwargs):
+        return root.products.all().count()
 
     
     @staticmethod
     @login_required
-    def resolve_products_count(root, info, **kwargs):
-        return root.products.all().count()
+    def resolve_shop_rate(root, info, **kwargs):
+        rate = ShopRate.objects.filter(shop=root).aggregate(Avg("rate"))
+        return rate["rate__avg"]
+
+
+class ShopUpdateInputType(graphene.InputObjectType):
+    name = graphene.String()
+    url = graphene.String()
+    shop_pic = Upload()

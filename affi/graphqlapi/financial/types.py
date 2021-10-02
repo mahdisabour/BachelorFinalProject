@@ -37,16 +37,7 @@ class WalletNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = {}
 
-    # custome Fields
-    # transactions = graphene.List(TransactionNode)
-
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
-
-
-    # @staticmethod
-    # @login_required
-    # def resolve_
-

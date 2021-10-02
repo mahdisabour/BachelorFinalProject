@@ -6,7 +6,6 @@ exlude_model_name = ["ModelWithMetaData"]
 
 app_models = apps.get_app_config('core').get_models()
 for model in app_models:
-    print(model)
     # if model.model_name not in exlude_model_name:
     try:
         admin.site.register(model)

@@ -18,7 +18,7 @@ class Image(models.Model):
     related_product = models.ForeignKey(
         "product.Product", on_delete=models.CASCADE, related_name="images")
     name = models.CharField(max_length=50, blank=True)
-    src = models.ImageField(upload_to=None, blank=True)
+    src = models.ImageField(upload_to=None, blank=True, default="product/default_product_pic.png")
     alt = models.CharField(max_length=50, blank=True)
 
 

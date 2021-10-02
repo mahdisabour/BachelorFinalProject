@@ -1,3 +1,4 @@
+import graphene
 from affi.core.models import User
 from graphene import ObjectType, Field
 import graphql_jwt
@@ -17,5 +18,3 @@ class CoreMutation(ObjectType):
     token_auth = ObtainJSONWebToken.Field()
     verify_token = graphql_jwt.Verify.Field()
     refresh_token = graphql_jwt.Refresh.Field()
-
-

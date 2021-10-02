@@ -15,10 +15,10 @@ class Shop(models.Model):
     name = models.CharField(max_length=50, blank=False)
     url = models.URLField(max_length=200, blank=False)
     type = models.CharField(max_length=50, choices=ShopType.CHOICES, default=ShopType.WOOCOMMERCE)
-    rating = models.FloatField(
-        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
+    shop_pic = models.ImageField(
+        upload_to='profile/', default="profile/default_shop_pic.png")
+    is_verified = models.BooleanField(default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-
 
     def save(self, *args, **kwargs):
         if not self.pk:
@@ -27,13 +27,14 @@ class Shop(models.Model):
         return super().save(*args, **kwargs)
 
 
-class ShopImage(models.Model):
+class ShopRate(models.Model):
     created_at = models.DateTimeField(auto_now=True)
-    updated_at = models.DateTimeField(auto_now=True, null=True)
-    related_shop = models.ForeignKey(
-        Shop, on_delete=models.CASCADE, related_name="images")
-    name = models.CharField(max_length=50, blank=True)
-    src = models.ImageField(upload_to="shop/", blank=True)
-    alt = models.CharField(max_length=50, blank=True)
-    def __str__(self) -> str:
-        return self.name
+    aff = models.ForeignKey("user.Aff", on_delete=models.CASCADE)
+    shop = models.ForeignKey(Shop, on_delete=models.CASCADE)
+    rate = models.IntegerField(
+        validators=[MinValueValidator(0), MaxValueValidator(5)], default=0)
+
+    class Meta:
+        unique_together = [
+            ['aff', 'shop']
+        ]
