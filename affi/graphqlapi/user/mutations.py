@@ -17,7 +17,6 @@ class CreateAff(graphene.Mutation):
 
     status = graphene.String()
 
-    @login_required
     def mutate(self, info, user_data, **kwargs):
         user = User(
             phone_number=user_data.get("phone_number"),
