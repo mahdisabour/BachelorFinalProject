@@ -20,7 +20,5 @@ class Transaction(models.Model):
     destination = models.ForeignKey(
         Wallet, on_delete=models.CASCADE)
     amount = models.IntegerField()
-    transaction_type = models.CharField(
-        max_length=50, choices=TransactionType.CHOICES)
-    transaction_state = models.CharField(
-        max_length=50, choices=TransactionType.CHOICES, default=TransactionState.PENDING)
+    # transaction_state = models.CharField(
+    #     max_length=50, choices=TransactionType.CHOICES, default=TransactionState.PENDING)

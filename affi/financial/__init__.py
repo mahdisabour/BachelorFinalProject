@@ -1,11 +1,11 @@
 
 class TransactionType:
     DEPOSIT = 'deposit'
-    RECEIVED = 'RECEIVED'
+    RECEIVED = 'received'
 
     CHOICES = [
         (DEPOSIT, 'deposit'),
-        (RECEIVED, 'RECEIVED')
+        (RECEIVED, 'received')
     ]
 
 
