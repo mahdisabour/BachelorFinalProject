@@ -14,7 +14,8 @@ services:
             - "8000:8000"
         volumes:
             - static_volume:/home/app/web/staticfiles
-            - media_files:/home/app/web/mediafiles
+            # - media_files:/home/app/web/mediafiles  
+            - ./mediafiles:/home/app/web/mediafiles
             - .:/home/app/web/
             - ./db.sqlite3:/home/app/web/db.sqlite3/
             

@@ -16,7 +16,7 @@ class Shop(models.Model):
     url = models.URLField(max_length=200, blank=False)
     type = models.CharField(max_length=50, choices=ShopType.CHOICES, default=ShopType.WOOCOMMERCE)
     shop_pic = models.ImageField(
-        upload_to='profile/', default="profile/default_shop_pic.png")
+        upload_to='profile/', default="profile/default_shop_pic.jpeg")
     is_verified = models.BooleanField(default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
