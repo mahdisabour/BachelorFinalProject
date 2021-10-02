@@ -43,6 +43,7 @@ class UpdateShop(graphene.Mutation):
 
     status = graphene.String()
 
+    @login_required
     def mutate(self, info, shop_data, user_data):
         user = info.context.user
         # update user values

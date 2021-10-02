@@ -1,6 +1,6 @@
 import graphene
 from graphene_file_upload.scalars import Upload
-
+from graphql_jwt.decorators import login_required
 
 from ..core.types import CreateUserInputType
 from ...core.models import User
@@ -17,6 +17,7 @@ class CreateAff(graphene.Mutation):
 
     status = graphene.String()
 
+    @login_required
     def mutate(self, info, user_data, **kwargs):
         user = User(
             phone_number=user_data.get("phone_number"),
@@ -40,6 +41,7 @@ class UpdateAff(graphene.Mutation):
 
     status = graphene.String()
 
+    @login_required
     def mutate(self, info, aff_data, user_data):
         user = info.context.user
         # update user values
