@@ -49,3 +49,4 @@ services:
 volumes:
     static_volume:
     media_files:
+    postgres_data:
