@@ -9,15 +9,34 @@ services:
         container_name: affi
         command: >
             sh -c "python manage.py runserver 0.0.0.0:8000"
-
         ports:
             - "8000:8000"
         volumes:
             - static_volume:/home/app/web/staticfiles
-            # - media_files:/home/app/web/mediafiles  
             - ./mediafiles:/home/app/web/mediafiles
             - .:/home/app/web/
             - ./db.sqlite3:/home/app/web/db.sqlite3/
+
+    redis:
+        build:
+            context: ./redis/
+            dockerfile: Dockerfile.dev
+        container_name: redis
+        ports:
+            - "6379:6379"
+
+    
+    celery:
+        restart: always
+        build:
+            context: ./
+            dockerfile: Dockerfile.dev
+        command: celery -A affi worker --loglevel=debug --concurrency=8
+        volumes:
+            - ./mediafiles:/home/app/web/mediafiles
+            - .:/home/app/web
+        depends_on:
+            - redis
             
 
 volumes:
