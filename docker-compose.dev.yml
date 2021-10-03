@@ -37,7 +37,14 @@ services:
             - .:/home/app/web
         depends_on:
             - redis
-            
+
+    
+    db:
+        image: postgres:13.0
+        volumes:
+            - postgres_data:/var/lib/postgresql/data/
+        env_file:
+            - ./db.env
 
 volumes:
     static_volume:
