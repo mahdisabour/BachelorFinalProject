@@ -16,6 +16,9 @@ services:
             - ./mediafiles:/home/app/web/mediafiles
             - .:/home/app/web/
             - ./db.sqlite3:/home/app/web/db.sqlite3/
+        env_file:
+            - ./.env.dev
+        
 
     redis:
         build:
@@ -37,6 +40,8 @@ services:
             - .:/home/app/web
         depends_on:
             - redis
+        env_file:
+            - ./.env.dev
 
     
     db:

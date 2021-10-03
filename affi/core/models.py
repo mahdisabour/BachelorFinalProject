@@ -35,7 +35,6 @@ class User(AbstractUser):
     username = None
     first_name = None
     last_name = None
-    is_staff = None
     # add additional fields in here
     phone_number = models.CharField(max_length=20, unique=True)
     address = models.CharField(max_length=100, blank=True, null=True)
