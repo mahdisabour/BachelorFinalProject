@@ -76,7 +76,7 @@ class Product(ModelWithMetaData):
     catalog_visibility = models.CharField(
         max_length=100, choices=CatalogVisibilityType.CHOICES, default=CatalogVisibilityType.VISIBLE)  # choices
     description = models.TextField(blank=True)
-    short_description = models.CharField(max_length=254, blank=True)
+    short_description = models.TextField(blank=True)
     sku = models.CharField(max_length=100, blank=True)
     price = models.IntegerField(blank=True, null=True)
     regular_price = models.IntegerField(blank=True, null=True)
