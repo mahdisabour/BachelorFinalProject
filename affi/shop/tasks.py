@@ -24,7 +24,7 @@ class WooCommerceHandler:
 
     def get_products(self):
         print("get product started ...")
-        products = self.wcapi.get("products").json()
+        products = self.wcapi.get("products", params={'per_page': 100}).json()
         for product in products:
             extracted_data = self.extract_product_data(product)
             Product.objects.create(related_shop=self.shop, **extracted_data)
