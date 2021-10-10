@@ -49,10 +49,15 @@ class WooCommerceHandler:
         data = product_json_extraction.extract_data(json)
         return data
 
-    @app.task
     def run(self):
         self.get_products()
         print("task Done")
         self.shop.data_ready = True
         self.shop.save()
+
+@app.task
+def woocommerece_handler(*args):
+    woocommerce_handler = WooCommerceHandler(shop=args[0])
+    woocommerce_handler.run()
+
     

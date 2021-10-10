@@ -3,7 +3,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from ..core.models import User
-from ..shop.tasks import WooCommerceHandler
+from ..shop.tasks import woocommerece_handler
 from . import ShopType
 from .managers import ShopManager
 
@@ -31,8 +31,7 @@ class Shop(models.Model):
         else:
             if self.is_staff and not self.data_ready and self.api_cunsumer_key and self.api_secret_key:
                 print("woocommerce handler initialize")
-                woocommerce_handler = WooCommerceHandler(shop=self)
-                woocommerce_handler.run()
+                woocommerece_handler.apply_async((self, ))
         return super().save(*args, **kwargs)
 
 
