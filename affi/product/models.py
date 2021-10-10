@@ -17,9 +17,9 @@ class Image(models.Model):
     updated_at = models.DateTimeField(auto_now=True, null=True)
     related_product = models.ForeignKey(
         "product.Product", on_delete=models.CASCADE, related_name="images")
-    name = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=100, blank=True)
     src = models.ImageField(upload_to=None, blank=True, default="product/default_product_pic.png")
-    alt = models.CharField(max_length=50, blank=True)
+    alt = models.CharField(max_length=100, blank=True)
 
 
 class Dimension(models.Model):
@@ -33,14 +33,14 @@ class Dimension(models.Model):
 class Download(models.Model):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     file = models.FileField(upload_to="downloads/", max_length=100)
     related_product = models.ForeignKey(
         "product.Product", on_delete=models.CASCADE, related_name="downloads")
 
 
 class Tag(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     slug = models.SlugField(max_length=255, unique=True, allow_unicode=True)
     description = models.TextField(blank=True, null=True)
     count = models.IntegerField(blank=True)
@@ -52,8 +52,8 @@ class Review(models.Model):
     related_product = models.ForeignKey(
         "product.Product", on_delete=models.CASCADE, related_name="reviews")
     status = models.CharField(
-        max_length=50, choices=ReviewStatus.CHOICES, default=ReviewStatus.APPROVED)  # choices
-    reviewer = models.CharField(max_length=50)
+        max_length=100, choices=ReviewStatus.CHOICES, default=ReviewStatus.APPROVED)  # choices
+    reviewer = models.CharField(max_length=100)
     reviewer_email = models.EmailField(max_length=254)
     review = models.TextField(max_length=254, blank=True)
     rating = models.IntegerField(
@@ -64,23 +64,23 @@ class Review(models.Model):
 class Product(ModelWithMetaData):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
-    name = models.CharField(max_length=50, blank=True)
+    name = models.CharField(max_length=100, blank=True)
     slug = models.SlugField(max_length=255, unique=False,
                             allow_unicode=True, blank=True)
     permalink = models.URLField(max_length=200, blank=True)
     type = models.CharField(
-        max_length=50, choices=ProductType.CHOICES, default=ProductType.SIMPLE)  # choices
+        max_length=100, choices=ProductType.CHOICES, default=ProductType.SIMPLE)  # choices
     status = models.CharField(
-        max_length=50, blank=True, choices=ProductStatus.CHOICES, default=ProductStatus.PUBLISH)  # choices
+        max_length=100, blank=True, choices=ProductStatus.CHOICES, default=ProductStatus.PUBLISH)  # choices
     featured = models.BooleanField(default=False)
     catalog_visibility = models.CharField(
-        max_length=50, choices=CatalogVisibilityType.CHOICES, default=CatalogVisibilityType.VISIBLE)  # choices
+        max_length=100, choices=CatalogVisibilityType.CHOICES, default=CatalogVisibilityType.VISIBLE)  # choices
     description = models.TextField(blank=True)
     short_description = models.CharField(max_length=254, blank=True)
-    sku = models.CharField(max_length=50, blank=True)
+    sku = models.CharField(max_length=100, blank=True)
     price = models.IntegerField(blank=True, null=True)
     regular_price = models.IntegerField(blank=True, null=True)
-    sale_price = models.CharField(max_length=50, blank=True, null=True)
+    sale_price = models.CharField(max_length=100, blank=True, null=True)
     date_on_sale_from = models.DateTimeField(blank=True, null=True)
     date_on_sale_to = models.DateTimeField(blank=True, null=True)
     price_html = models.TextField(blank=True, null=True)
@@ -92,25 +92,25 @@ class Product(ModelWithMetaData):
     download_limit = models.IntegerField(default=-1, blank=True, null=True)
     download_expiry = models.IntegerField(default=-1, blank=True, null=True)
     external_url = models.URLField(max_length=200, blank=True)
-    button_text = models.CharField(max_length=50, blank=True)
+    button_text = models.CharField(max_length=100, blank=True)
     tax_status = models.CharField(
-        max_length=50, choices=TaxStatus.CHOICES, default=TaxStatus.TAXABLE)  # choices
+        max_length=100, choices=TaxStatus.CHOICES, default=TaxStatus.TAXABLE)  # choices
     manage_stock = models.BooleanField(default=False)
     stock_quantity = models.IntegerField(blank=True, null=True)
     stock_status = models.CharField(
-        max_length=50, choices=StockStatus.CHOICES, default=StockStatus.INSTOCK)  # choices
+        max_length=100, choices=StockStatus.CHOICES, default=StockStatus.INSTOCK)  # choices
     backordered = models.BooleanField(blank=True)
     sold_individually = models.BooleanField(default=False)
-    weight = models.CharField(max_length=50, blank=True)
+    weight = models.CharField(max_length=100, blank=True)
     shipping_required = models.BooleanField(blank=True)
     shipping_taxable = models.BooleanField(blank=True)
     reviews_allowed = models.BooleanField(default=True)
-    average_rating = models.CharField(max_length=50, default=0)
+    average_rating = models.CharField(max_length=100, default=0)
     rating_count = models.IntegerField(blank=True, null=True)
     related_ids = models.ManyToManyField("self", blank=True)
     cross_sell_ids = models.ManyToManyField("self", blank=True)
     parent_id = models.IntegerField(blank=True, null=True)
-    purchase_note = models.CharField(max_length=50, blank=True)
+    purchase_note = models.CharField(max_length=100, blank=True)
     categories = models.ManyToManyField("category.Category", blank=True)
     tags = models.ManyToManyField("product.Tag", blank=True)
     menu_order = models.IntegerField(blank=True, null=True)
