@@ -79,7 +79,7 @@ class Product(ModelWithMetaData):
     short_description = models.TextField(blank=True)
     sku = models.CharField(max_length=100, blank=True)
     price = models.IntegerField(blank=True, null=True)
-    regular_price = models.IntegerField(blank=True, null=True)
+    regular_price = models.CharField(max_length=100, blank=True, null=True)
     sale_price = models.CharField(max_length=100, blank=True, null=True)
     date_on_sale_from = models.DateTimeField(blank=True, null=True)
     date_on_sale_to = models.DateTimeField(blank=True, null=True)
