@@ -23,7 +23,7 @@ class TransactionNode(DjangoObjectType):
     class Meta:
         model = Transaction
         interfaces = (PlainTextNode, )
-        filter_fields = {}
+        filter_fields = {'id'}
 
     @classmethod
     @login_required
@@ -35,7 +35,7 @@ class WalletNode(DjangoObjectType):
     class Meta:
         model = Wallet
         interfaces = (PlainTextNode, )
-        filter_fields = {}
+        filter_fields = {'id'}
 
     @classmethod
     @login_required
