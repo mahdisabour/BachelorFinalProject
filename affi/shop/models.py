@@ -3,6 +3,7 @@ from django.conf import settings
 from django.core.validators import MinValueValidator, MaxValueValidator
 
 from ..core.models import User
+from ..shop.tasks import WooCommerceHandler
 from . import ShopType
 from .managers import ShopManager
 
@@ -18,12 +19,20 @@ class Shop(models.Model):
     shop_pic = models.ImageField(
         upload_to='profile/', default="profile/default_shop_pic.jpeg")
     is_staff = models.BooleanField(default=False)
+    api_cunsumer_key = models.CharField(max_length=255, blank=True)
+    api_secret_key = models.CharField(max_length=255, blank=True)
+    data_ready = models.BooleanField(default=False)
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
 
     def save(self, *args, **kwargs):
         if not self.pk:
             self.user.role = User.Roles.SHOP
             self.user.save()
+        else:
+            if self.is_staff and not self.data_ready and self.api_cunsumer_key and self.api_secret_key:
+                print("woocommerce handler initialize")
+                woocommerce_handler = WooCommerceHandler(shop=self)
+                woocommerce_handler.run()
         return super().save(*args, **kwargs)
 
 

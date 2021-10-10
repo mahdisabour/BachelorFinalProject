@@ -15,7 +15,7 @@ def random_with_N_digits():
 
 
 class ModelWithMetaData(models.Model):
-    metadata = models.JSONField(blank=True, null=True, default=dict)
+    meta_data = models.JSONField(blank=True, null=True, default=dict)
 
     class Meta:
         abstract = True

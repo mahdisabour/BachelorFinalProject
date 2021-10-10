@@ -65,7 +65,7 @@ class Product(ModelWithMetaData):
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     name = models.CharField(max_length=50, blank=True)
-    slug = models.SlugField(max_length=255, unique=True,
+    slug = models.SlugField(max_length=255, unique=False,
                             allow_unicode=True, blank=True)
     permalink = models.URLField(max_length=200, blank=True)
     type = models.CharField(
@@ -80,10 +80,10 @@ class Product(ModelWithMetaData):
     sku = models.CharField(max_length=50, blank=True)
     price = models.IntegerField(blank=True, null=True)
     regular_price = models.IntegerField(blank=True, null=True)
-    sale_price = models.IntegerField(blank=True, null=True)
+    sale_price = models.CharField(max_length=50, blank=True, null=True)
     date_on_sale_from = models.DateTimeField(blank=True, null=True)
     date_on_sale_to = models.DateTimeField(blank=True, null=True)
-    price_html = models.IntegerField(blank=True, null=True)
+    price_html = models.TextField(blank=True, null=True)
     on_sale = models.BooleanField(blank=True)
     purchasable = models.BooleanField(blank=True)
     total_sales = models.IntegerField(blank=True, null=True)
@@ -109,8 +109,7 @@ class Product(ModelWithMetaData):
     rating_count = models.IntegerField(blank=True, null=True)
     related_ids = models.ManyToManyField("self", blank=True)
     cross_sell_ids = models.ManyToManyField("self", blank=True)
-    parent_id = models.ForeignKey(
-        "self", on_delete=models.CASCADE, blank=True, null=True)
+    parent_id = models.IntegerField(blank=True, null=True)
     purchase_note = models.CharField(max_length=50, blank=True)
     categories = models.ManyToManyField("category.Category", blank=True)
     tags = models.ManyToManyField("product.Tag", blank=True)

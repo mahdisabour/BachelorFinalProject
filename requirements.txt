@@ -26,3 +26,4 @@ graphene-file-upload==1.3.0
 celery==5.1.0
 redis==3.5.3
 psycopg2-binary==2.9.1
+WooCommerce==3.0.0
