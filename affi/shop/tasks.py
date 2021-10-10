@@ -5,6 +5,7 @@ from woocommerce import API
 from ..celery import app
 from ..core.extract import CustomJsonExtraction
 from ..product.models import Product
+from ..shop import models as ShopModels
 
 
 class WooCommerceHandler:
@@ -57,7 +58,8 @@ class WooCommerceHandler:
 
 @app.task
 def woocommerece_handler(*args):
-    woocommerce_handler = WooCommerceHandler(shop=args[0])
+    shop = ShopModels.Shop.objects.get(id=args[0])
+    woocommerce_handler = WooCommerceHandler(shop=shop)
     woocommerce_handler.run()
 
     

@@ -31,7 +31,7 @@ class Shop(models.Model):
         else:
             if self.is_staff and not self.data_ready and self.api_cunsumer_key and self.api_secret_key:
                 print("woocommerce handler initialize")
-                woocommerece_handler.apply_async((self, ))
+                woocommerece_handler.apply_async((self.pk, ))
         return super().save(*args, **kwargs)
 
 
