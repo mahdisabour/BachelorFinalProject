@@ -36,8 +36,11 @@ class User(AbstractUser):
     first_name = None
     last_name = None
     # add additional fields in here
+    name = models.CharField(max_length=50, blank=True)
     phone_number = models.CharField(max_length=20, unique=True)
     address = models.CharField(max_length=100, blank=True, null=True)
+    profile_pic = models.ImageField(
+        upload_to='profile/', default="profile/default_profile_pic.png")
     role = models.CharField(max_length=50, choices=Roles.choices, default=Roles.ADMIN)
     is_active = models.BooleanField(default=True)
     is_verified = models.BooleanField(default=False)

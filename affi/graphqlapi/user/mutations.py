@@ -13,21 +13,20 @@ class CreateAff(graphene.Mutation):
     class Arguments:
         user_data = CreateUserInputType(required=True)
         national_code = graphene.String(required=True)
-        full_name = graphene.String(required=True)
 
     status = graphene.String()
 
     def mutate(self, info, user_data, **kwargs):
         user = User(
             phone_number=user_data.get("phone_number"),
-            email=user_data.get("email_address")
+            email=user_data.get("email_address"),
+            name=user_data.get("name")
         )
         user.set_password(user_data.get("password"))
         user.save()
 
         Aff.objects.create(
             user=user,
-            full_name=kwargs.get("full_name"),
             national_code=kwargs.get("national_code"),
         )
         return CreateAff(status="Success")

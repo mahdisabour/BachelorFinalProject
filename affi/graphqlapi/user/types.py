@@ -36,7 +36,5 @@ class AffNode(DjangoObjectType):
 
 class AffUpdateInputType(InputObjectType):
     age = graphene.Int()
-    birth_data = graphene.DateTime()
+    birth_data = graphene.Date()
     national_code = graphene.String()
-    profile_pic = Upload()
-    full_name = graphene.String()

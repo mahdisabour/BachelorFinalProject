@@ -14,7 +14,6 @@ from .types import ShopUpdateInputType
 class CreateShop(graphene.Mutation):
     class Arguments:
         user_data = CreateUserInputType(required=True)
-        name = graphene.String(required=True)
         url = graphene.String(required=True)
 
     status = graphene.String()
@@ -22,14 +21,14 @@ class CreateShop(graphene.Mutation):
     def mutate(self, info, user_data, **kwargs):
         user = User(
             phone_number=user_data.get("phone_number"),
-            email=user_data.get("email_address")
+            email=user_data.get("email_address"),
+            name=user_data.get("name")
         )
         user.set_password(user_data.get("password"))
         user.save()
 
         Shop.objects.create(
             user=user, 
-            name=kwargs.get("name"),
             url=kwargs.get("url")
         )
         return CreateShop(status="success")

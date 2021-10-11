@@ -1,6 +1,7 @@
 import graphene
 from graphene_django import DjangoObjectType
 from graphene import relay, InputObjectType
+from graphene_file_upload.scalars import Upload
 from graphql_jwt.decorators import login_required
 
 from ...core.models import User
@@ -39,8 +40,11 @@ class CreateUserInputType(InputObjectType):
     phone_number = graphene.String(required=True)
     password = graphene.String(required=True)
     email_address = graphene.String(required=True)
+    name = graphene.String(required=True)
 
 
 class UserUpdateInputType(InputObjectType):
     address = graphene.String()
+    name = graphene.String()
+    profile_pic = Upload()
 

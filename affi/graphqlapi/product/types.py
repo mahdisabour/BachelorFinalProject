@@ -112,7 +112,7 @@ class ProductNode(DjangoObjectType):
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
+        return queryset
 
     @staticmethod
     @login_required

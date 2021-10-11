@@ -57,6 +57,5 @@ class ShopNode(DjangoObjectType):
 
 
 class ShopUpdateInputType(graphene.InputObjectType):
-    name = graphene.String()
     url = graphene.String()
     shop_pic = Upload()

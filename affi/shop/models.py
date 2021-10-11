@@ -13,7 +13,7 @@ class Shop(models.Model):
 
     objects = ShopManager()
 
-    name = models.CharField(max_length=50, blank=False)
+    # name = models.CharField(max_length=50, blank=False)
     url = models.URLField(max_length=200, blank=False)
     type = models.CharField(max_length=50, choices=ShopType.CHOICES, default=ShopType.WOOCOMMERCE)
     shop_pic = models.ImageField(
