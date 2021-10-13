@@ -2,11 +2,13 @@ from django.db.models import Avg
 
 import graphene
 from graphene_django import DjangoObjectType
+from graphene_django.filter import DjangoFilterConnectionField
 from graphene import relay
 from graphene_file_upload.scalars import Upload
 from graphql_jwt.decorators import login_required
 
 from ...shop.models import Shop, ShopRate
+from .filters import ShopFilter
 
 
 class PlainTextNode(relay.Node):
@@ -28,8 +30,8 @@ class ShopNode(DjangoObjectType):
         model = Shop
         interfaces = (PlainTextNode, )
         filter_fields = {
-            'id':['exact'],
-        } 
+            'id': ['exact'],
+        }
         filter_order_by = True
         exclude_fields = []
 
@@ -42,13 +44,11 @@ class ShopNode(DjangoObjectType):
     def get_queryset(cls, queryset, info):
         super().get_queryset(queryset, info)
 
-    
     @staticmethod
     @login_required
     def resolve_products_count(root, info, **kwargs):
         return root.products.all().count()
 
-    
     @staticmethod
     @login_required
     def resolve_shop_rate(root, info, **kwargs):

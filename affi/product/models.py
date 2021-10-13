@@ -12,14 +12,24 @@ from . import CatalogVisibilityType, ProductType, ReviewStatus, ProductStatus, S
 # Create your models here.
 
 
-class Image(models.Model):
+class ProductImage(models.Model):
+    base_id = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     related_product = models.ForeignKey(
         "product.Product", on_delete=models.CASCADE, related_name="images")
     name = models.CharField(max_length=100, blank=True)
-    src = models.ImageField(upload_to=None, blank=True, default="product/default_product_pic.png")
+    src = models.URLField(max_length=200, blank=True, null=True)
     alt = models.CharField(max_length=100, blank=True)
+
+    def __str__(self) -> str:
+        if self.related_product.name:
+            return self.related_product.name
+        else:
+            return super().__str__()
+
+    class Meta:
+        proxy = False
 
 
 class Dimension(models.Model):
@@ -61,7 +71,8 @@ class Review(models.Model):
     verified = models.BooleanField(default=False)
 
 
-class Product(ModelWithMetaData):
+class Product(models.Model):
+    base_id = models.PositiveIntegerField(blank=True, null=True)
     created_at = models.DateTimeField(auto_now=True)
     updated_at = models.DateTimeField(auto_now=True, null=True)
     name = models.CharField(max_length=100, blank=True)
@@ -118,3 +129,14 @@ class Product(ModelWithMetaData):
         validators=[MinValueValidator(0), MaxValueValidator(100)], blank=True, null=True)
     related_shop = models.ForeignKey(
         "shop.Shop", on_delete=models.CASCADE, null=True, related_name="products")
+
+    class Meta:
+        unique_together = [
+            ['id', 'related_shop']
+        ]
+
+    def __str__(self) -> str:
+        if self.name:
+            return self.name
+        else:
+            return super().__str__()

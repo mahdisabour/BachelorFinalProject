@@ -3,7 +3,7 @@ from graphene_django.filter import DjangoFilterConnectionField
 
 from .types import (
     PlainTextNode, 
-    ImageNode, 
+    ProductImageNode, 
     DimensionNode,
     DownloadNode,
     TagNode, 
@@ -15,7 +15,7 @@ from .filters import ProductFilter
 
 
 class ProductQuery(ObjectType):
-    all_product_image = DjangoFilterConnectionField(ImageNode)
+    all_product_image = DjangoFilterConnectionField(ProductImageNode)
     all_dimension = DjangoFilterConnectionField(DimensionNode)
     all_download = DjangoFilterConnectionField(DownloadNode)
     all_tag = DjangoFilterConnectionField(TagNode)

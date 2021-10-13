@@ -4,9 +4,11 @@ from graphene_django import DjangoObjectType
 from graphene import relay
 from graphql_jwt.decorators import login_required
 
+from affi.graphqlapi.product.filters import ProductFilter
+
 
 from ...product.models import (
-    Image,
+    ProductImage,
     Dimension,
     Download,
     Tag,
@@ -29,17 +31,13 @@ class PlainTextNode(relay.Node):
         return global_id.split(':')
 
 
-class ImageNode(DjangoObjectType):
+class ProductImageNode(DjangoObjectType):
     class Meta:
-        model = Image
+        model = ProductImage
         interfaces = (PlainTextNode, )
-        filter_fields = ["id", ]
-        filter_order_by = True
+        filter_fields = ["name", ]
+        # filter_order_by = True
 
-    @classmethod
-    @login_required
-    def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
 
 
 class DimensionNode(DjangoObjectType):
@@ -49,11 +47,6 @@ class DimensionNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
-    @classmethod
-    @login_required
-    def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
-
 
 class DownloadNode(DjangoObjectType):
     class Meta:
@@ -61,11 +54,6 @@ class DownloadNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ["id", ]
         filter_order_by = True
-
-    @classmethod
-    @login_required
-    def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
 
 
 class TagNode(DjangoObjectType):
@@ -75,11 +63,6 @@ class TagNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
-    @classmethod
-    @login_required
-    def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
-
 
 class ReviewNode(DjangoObjectType):
     class Meta:
@@ -88,25 +71,20 @@ class ReviewNode(DjangoObjectType):
         filter_fields = ["id", ]
         filter_order_by = True
 
-    @classmethod
-    @login_required
-    def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
-
 
 class ProductNode(DjangoObjectType):
     class Meta:
         model = Product
         interfaces = (PlainTextNode, )
-        filter_fields = ["id", ]
+        filterset_class = ProductFilter
         filter_order_by = True
+        # exclude_fields = ["images", ]
 
     # custom fields
-    images = graphene.List(ImageNode)
+    images = graphene.List(ProductImageNode)
     dimensions = graphene.List(DimensionNode)
     downloads = graphene.List(DownloadNode)
     tags = graphene.List(TagNode)
-    reviews = graphene.List(ReviewNode)
     categories = graphene.List(CategoryNode)
 
     @classmethod

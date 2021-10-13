@@ -5,6 +5,8 @@ from woocommerce import API
 from ..celery import app
 from ..core.extract import CustomJsonExtraction
 from ..product.models import Product
+from ..product.models import ProductImage
+from ..category.models import Category, Image
 from ..shop import models as ShopModels
 
 
@@ -12,26 +14,30 @@ class WooCommerceHandler:
     def __init__(self, shop):
         # self.shop = Shop.objects.get(id=shop_id)
         self.shop = shop
-        print(self.shop.api_cunsumer_key)
         self.wcapi = API(
-            url=self.shop.url, # Your store URL
-            consumer_key=self.shop.api_cunsumer_key, # Your consumer key
-            consumer_secret=self.shop.api_secret_key, # Your consumer secret
-            wp_api=True, # Enable the WP REST API integration
-            version="wc/v3", # WooCommerce WP REST API version
+            url=self.shop.url,  # Your store URL
+            consumer_key=self.shop.api_cunsumer_key,  # Your consumer key
+            consumer_secret=self.shop.api_secret_key,  # Your consumer secret
+            wp_api=True,  # Enable the WP REST API integration
+            version="wc/v3",  # WooCommerce WP REST API version
             timeout=10
         )
 
     def get_products(self):
-        print("get product started ...")
         products = self.wcapi.get("products", params={'per_page': 100}).json()
         for product in products:
             extracted_data = self.extract_product_data(product)
-            Product.objects.create(related_shop=self.shop, **extracted_data)
-        print("products ready")
+            product_obj = Product.objects.create(
+                related_shop=self.shop, base_id=product["id"], **extracted_data)
+            if product["images"]:
+                for image in product["images"]:
+                    image_extracted_data = self.extract_image_data(
+                        image
+                    )  # extract category image data
+                    ProductImage.objects.create(
+                        related_product=product_obj, base_id=image["id"], **image_extracted_data)
 
     def extract_product_data(self, json):
-        print("extract data started ...")
         exclude_fields = [
             "id",
             "related_ids",
@@ -42,7 +48,7 @@ class WooCommerceHandler:
             "downloads",
             "dimensions",
             "images",
-        ]   
+        ]
         product_json_extraction = CustomJsonExtraction(
             model=Product,
             exclude_fields=exclude_fields
@@ -50,16 +56,57 @@ class WooCommerceHandler:
         data = product_json_extraction.extract_data(json)
         return data
 
+    def get_categories(self):
+        categories = self.wcapi.get(
+            "products/categories", params={'per_page': 100, 'order': 'asc', "orderby": "id"}).json()
+        for cat in categories:  # handle data for each category
+            extracted_data = self.extract_category_data(
+                cat
+            )  # extract category data
+            category = Category.objects.create(
+                related_shop=self.shop, base_id=cat["id"], **extracted_data
+            )
+            if cat["image"]:
+                image_extracted_data = self.extract_image_data(
+                    cat["image"]
+                )  # extract category image data
+                Image.objects.create(
+                    related_category=category, base_id=cat["image"]["id"], **image_extracted_data)
+
+    def extract_category_data(self, json):
+        exclude_fields = [
+            "id",
+            "image",
+        ]
+        category_json_extraction = CustomJsonExtraction(
+            model=Category,
+            exclude_fields=exclude_fields
+        )
+        data = category_json_extraction.extract_data(json)
+        return data
+
+    def extract_image_data(self, json):
+        exclude_fields = [
+            "id"
+        ]
+        category_image_extraction = CustomJsonExtraction(
+            model=Image,
+            exclude_fields=exclude_fields
+        )
+        data = category_image_extraction.extract_data(json)
+        return data
+
     def run(self):
+        self.get_categories()
         self.get_products()
-        print("task Done")
         self.shop.data_ready = True
         self.shop.save()
 
-@app.task
+# @app.task
+
+
 def woocommerece_handler(*args):
     shop = ShopModels.Shop.objects.get(id=args[0])
+    print(shop.url)
     woocommerce_handler = WooCommerceHandler(shop=shop)
     woocommerce_handler.run()
-
-    

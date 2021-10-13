@@ -28,11 +28,10 @@ class Shop(models.Model):
         if not self.pk:
             self.user.role = User.Roles.SHOP
             self.user.save()
-        else:
-            if self.is_staff and not self.data_ready and self.api_cunsumer_key and self.api_secret_key:
-                print("woocommerce handler initialize")
-                woocommerece_handler.apply_async((self.pk, ))
-        return super().save(*args, **kwargs)
+        elif self.is_staff and not self.data_ready and self.api_cunsumer_key and self.api_secret_key:
+            # woocommerece_handler.apply_async((self.pk, ))
+            woocommerece_handler(self.pk)
+        return super(Shop, self).save(*args, **kwargs)
 
 
 class ShopRate(models.Model):
