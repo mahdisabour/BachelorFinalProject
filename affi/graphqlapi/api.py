@@ -10,6 +10,7 @@ from .financial.schema import FinancialQuery
 from .core.mutations import CoreMutation
 from .user.mutations import UserMutation
 from .shop.mutations import ShopMutation
+from .affiliation.mutations import AffiliationMutations
 
 
 class Query(
@@ -28,6 +29,7 @@ class Mutation(
     CoreMutation,
     UserMutation,
     ShopMutation,
+    AffiliationMutations,
     graphene.ObjectType
 ):
     pass

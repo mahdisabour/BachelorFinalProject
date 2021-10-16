@@ -40,20 +40,21 @@ class CategoryNode(DjangoObjectType):
         interfaces = (PlainTextNode, )
         filter_fields = ["id", ]
         filter_order_by = True
+        exclude_fields = ["parent", ]
 
     # custome fields
-    images = graphene.List(ImageNode)
+    image = graphene.List(ImageNode)
 
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
+        return queryset
 
     
     @classmethod
     @login_required
-    def resolve_images(root, info, **kwargs):
-        return root.images.all()
+    def resolve_image(root, info, **kwargs):
+        return root.image
 
 
 

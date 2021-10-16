@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'affi.shop',
     'affi.user',
     'affi.financial',
+    'affi.affiliation',
     # installed
     'graphene_django',
     'django_filters',

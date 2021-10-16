@@ -33,9 +33,16 @@ class WooCommerceHandler:
                 for image in product["images"]:
                     image_extracted_data = self.extract_image_data(
                         image
-                    )  # extract category image data
+                    )  # extract product image data
                     ProductImage.objects.create(
                         related_product=product_obj, base_id=image["id"], **image_extracted_data)
+            # save product category
+            if product["categories"]:
+                for category in product["categories"]:
+                    cat_obj = Category.objects.get(base_id=category["id"])
+                    product_obj.categories.add(cat_obj)
+
+
 
     def extract_product_data(self, json):
         exclude_fields = [

@@ -35,7 +35,7 @@ class ProductImageNode(DjangoObjectType):
     class Meta:
         model = ProductImage
         interfaces = (PlainTextNode, )
-        filter_fields = ["name", ]
+        filter_fields = ["id", ]
         # filter_order_by = True
 
 
@@ -81,7 +81,7 @@ class ProductNode(DjangoObjectType):
         # exclude_fields = ["images", ]
 
     # custom fields
-    images = graphene.List(ProductImageNode)
+    product_images = graphene.List(ProductImageNode)
     dimensions = graphene.List(DimensionNode)
     downloads = graphene.List(DownloadNode)
     tags = graphene.List(TagNode)
@@ -94,7 +94,7 @@ class ProductNode(DjangoObjectType):
 
     @staticmethod
     @login_required
-    def resolve_images(root, info, **kwargs):
+    def resolve_product_images(root, info, **kwargs):
         return root.images.all()
 
     @staticmethod
