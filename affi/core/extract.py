@@ -10,6 +10,8 @@ class CustomJsonExtraction:
     def extract_data(self, json):
         model_fields = self.get_fields()
         json_fields = json
+        print(json_fields)
+        print(type(json_fields))
         extracted_data = {
             key: val for key, val in json_fields.items() if (key in model_fields) and (key not in self.exclude_fields)
         }
