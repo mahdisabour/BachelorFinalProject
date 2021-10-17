@@ -29,8 +29,8 @@ class Shop(models.Model):
             self.user.role = User.Roles.SHOP
             self.user.save()
         elif self.is_staff and not self.data_ready and self.api_cunsumer_key and self.api_secret_key:
-            # woocommerece_handler.apply_async((self.pk, ))
-            woocommerece_handler(self.pk)
+            woocommerece_handler.apply_async((self.pk, ))
+            # woocommerece_handler(self.pk)
         return super(Shop, self).save(*args, **kwargs)
 
 

@@ -109,9 +109,9 @@ class WooCommerceHandler:
         self.shop.data_ready = True
         self.shop.save()
 
-# @app.task
 
 
+@app.task
 def woocommerece_handler(*args):
     shop = ShopModels.Shop.objects.get(id=args[0])
     print(shop.url)
