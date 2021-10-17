@@ -71,15 +71,16 @@ class WooCommerceHandler:
             extracted_data = self.extract_category_data(
                 cat
             )  # extract category data
-            category = Category.objects.create(
-                related_shop=self.shop, base_id=cat["id"], **extracted_data
-            )
-            if cat["image"]:
-                image_extracted_data = self.extract_image_data(
-                    cat["image"]
-                )  # extract category image data
-                Image.objects.create(
-                    related_category=category, base_id=cat["image"]["id"], **image_extracted_data)
+            if extracted_data: # check if extracted date is not none
+                category = Category.objects.create(
+                    related_shop=self.shop, base_id=cat["id"], **extracted_data
+                )
+                if cat["image"]:
+                    image_extracted_data = self.extract_image_data(
+                        cat["image"]
+                    )  # extract category image data
+                    Image.objects.create(
+                        related_category=category, base_id=cat["image"]["id"], **image_extracted_data)
 
     def extract_category_data(self, json):
         exclude_fields = [
