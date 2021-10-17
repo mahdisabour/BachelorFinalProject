@@ -1,3 +1,5 @@
+import json
+
 import graphene
 from graphene_file_upload.scalars import Upload
 from graphql_jwt.decorators import login_required
@@ -102,9 +104,29 @@ class GetShopToken(graphene.Mutation):
         return GetShopToken(token="fjas;dkj")
 
 
+class JsonObject(graphene.ObjectType):
+    key = graphene.String()
+    val = graphene.String()
+
+
+class GetMetaData(graphene.Mutation):
+    meta = graphene.List(JsonObject)
+
+    def mutate(self, info):
+        meta_data = info.context.META
+        output = []
+        for key, val in meta_data.items():
+            if isinstance(key, str) and isinstance(val, str):
+                json_object = JsonObject(key=key, val=val)
+                output.append(json_object)
+
+        return GetMetaData(meta=output)
+
+
 
 class ShopMutation(graphene.ObjectType):
     create_shop = CreateShop.Field()
     rate_shop = RateShop.Field()
     update_shop = UpdateShop.Field()
     get_shop_token = GetShopToken.Field()
+    get_meta_data = GetMetaData.Field()
