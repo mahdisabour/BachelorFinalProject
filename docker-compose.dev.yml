@@ -20,7 +20,7 @@ services:
         ports:
             - "8000:8000"
         volumes:
-            - static_volume:/home/app/web/staticfiles
+            - ./staticfiles:/home/app/web/staticfiles 
             - ./mediafiles:/home/app/web/mediafiles
             - .:/home/app/web/
             - ./db.sqlite3:/home/app/web/db.sqlite3/
@@ -63,6 +63,7 @@ services:
         restart: always
         volumes:
             - ./mediafiles:/home/app/web/mediafiles
+            - ./staticfiles:/home/app/web/staticfiles 
             - ./nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
             - ./data/certbot/conf:/etc/letsencrypt
             - ./data/certbot/www:/var/www/certbot
@@ -81,6 +82,7 @@ services:
             - ./data/certbot/conf:/etc/letsencrypt
             - ./data/certbot/www:/var/www/certbot
             - ./mediafiles:/home/app/web/mediafiles
+            - ./staticfiles:/home/app/web/staticfiles 
 
     
 
