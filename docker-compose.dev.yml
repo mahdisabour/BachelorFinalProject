@@ -57,9 +57,8 @@ services:
     
     nginx:
         build:
-            context: ./nignx/
+            context: ./nginx/
             dockerfile: Dockerfile.dev
-            
         container_name: nginx
         restart: always
         volumes:
