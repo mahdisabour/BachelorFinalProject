@@ -20,5 +20,6 @@ class CategoryQuery(ObjectType):
     def resolve_parent_categories(self, info):
         return Category.objects.filter(parent=0)
 
-    def resolve_child_categories_by_base_id(self, info, parent_base_id):
+    def resolve_child_categories_by_parent_base_id(self, info, parent_base_id):
+        print(Category.objects.filter(parent=parent_base_id))
         return Category.objects.filter(parent=parent_base_id)
