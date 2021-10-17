@@ -66,6 +66,7 @@ class WooCommerceHandler:
     def get_categories(self):
         categories = self.wcapi.get(
             "products/categories", params={'per_page': 100, 'order': 'asc', "orderby": "id"}).json()
+        print(categories)
         for cat in categories:  # handle data for each category
             extracted_data = self.extract_category_data(
                 cat
