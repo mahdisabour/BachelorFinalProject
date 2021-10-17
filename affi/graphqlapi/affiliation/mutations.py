@@ -20,7 +20,6 @@ class RequestAffiliationUrl(graphene.Mutation):
     @login_required
     def mutate(self, info, aff_user_id, product_id):
         user = User.objects.get(id=aff_user_id)
-        print(user.role)
         if user.role != "AFF":
             return RequestAffiliationUrl(status="Failed", error="User is not Affiliator")
         affiliator = Aff.objects.get(user__pk=aff_user_id)

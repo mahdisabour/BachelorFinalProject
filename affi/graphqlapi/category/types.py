@@ -43,7 +43,7 @@ class CategoryNode(DjangoObjectType):
         exclude_fields = ["parent", ]
 
     # custome fields
-    image = graphene.List(ImageNode)
+    category_image = graphene.Field(ImageNode)
 
     @classmethod
     @login_required
@@ -53,7 +53,7 @@ class CategoryNode(DjangoObjectType):
     
     @classmethod
     @login_required
-    def resolve_image(root, info, **kwargs):
+    def resolve_category_image(root, info, *args, **kwargs):
         return root.image
 
 

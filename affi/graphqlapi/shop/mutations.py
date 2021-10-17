@@ -91,7 +91,20 @@ class RateShop(graphene.Mutation):
         return RateShop(status="success")
 
 
+class GetShopToken(graphene.Mutation):
+
+    token = graphene.String()
+    
+    def mutate(self, info):
+        for key, val in info.context.META.items():
+            print(key, "-->", val)
+
+        return GetShopToken(token="fjas;dkj")
+
+
+
 class ShopMutation(graphene.ObjectType):
     create_shop = CreateShop.Field()
     rate_shop = RateShop.Field()
     update_shop = UpdateShop.Field()
+    get_shop_token = GetShopToken.Field()
