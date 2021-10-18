@@ -43,7 +43,7 @@ class CreateOrder(graphene.Mutation):
     error = graphene.String()
     status = graphene.String()
 
-    @login_required
+    # @login_required
     def mutate(self, info, order_id, aff_id):
         affiliation = Affiliation.objects.get(id=aff_id)
         if Order.objects.filter(base_order_id=order_id, related_affiliation=affiliation).exists():
