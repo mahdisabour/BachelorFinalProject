@@ -28,7 +28,7 @@ class TransactionNode(DjangoObjectType):
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
+        return queryset 
 
 
 class WalletNode(DjangoObjectType):
@@ -40,4 +40,4 @@ class WalletNode(DjangoObjectType):
     @classmethod
     @login_required
     def get_queryset(cls, queryset, info):
-        super().get_queryset(queryset, info)
+        return queryset

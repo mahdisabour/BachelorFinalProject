@@ -13,7 +13,7 @@ def create_wallet(sender, instance, created, **kwargs):
         params = {
             "aff_id": instance.id
         }
-        url = instance.related_product.related_shop.url
+        url = instance.related_product.permalink
         instance.affiliation_url = create_url(url, params)
         instance.save()
 
